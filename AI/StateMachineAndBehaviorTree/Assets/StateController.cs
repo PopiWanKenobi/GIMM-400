@@ -14,6 +14,7 @@ public class StateController : MonoBehaviour {
     public Renderer[] childrenRend;
     public GameObject[] enemies;
     public float detectionRange = 5;
+    public Gizmos gizmos;
 
     public Transform GetNextNavPoint()
     {
@@ -23,13 +24,13 @@ public class StateController : MonoBehaviour {
 
     public void ChangeColor(Color color)
     {
-        foreach(Renderer r in childrenRend)
+       /* foreach(Renderer r in childrenRend)
         {
             foreach(Material m in r.materials)
             {
                 m.color = color;
             }
-        }
+        }*/
     }
     public bool CheckIfInRange(string tag)
     {
@@ -57,7 +58,9 @@ public class StateController : MonoBehaviour {
 	void Update () {
         currentState.CheckTransitions();
         currentState.Act();
-	}
+
+
+    }
     public void SetState(State state)
     {
         if(currentState != null)
@@ -73,4 +76,6 @@ public class StateController : MonoBehaviour {
             currentState.OnStateEnter();
         }
     }
+
+
 }
