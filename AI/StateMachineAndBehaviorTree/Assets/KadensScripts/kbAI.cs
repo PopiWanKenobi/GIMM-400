@@ -9,14 +9,15 @@ public class kbAI : kbStats
     public Transform player;
     kbState currentState;
 
+
     public kbAI instance;
 
-    float _health;
+    /*float _health;
     float _damage;
     float _sight;
     float _speed;
     float _projectileSpeed;
-    float _cooldown;
+    float _cooldown;*/
 
     public kbAI()
     {
@@ -28,15 +29,15 @@ public class kbAI : kbStats
 
     void Start()
     {
-        stats = instance;
+        this.instance.health = 70f;
+        this.instance.damage = 30f;
+        this.instance.sight = 8f;
+        this.instance.speed = 2f;
+        this.instance.projectileSpeed = 3f;
+        this.instance.cooldown = 3.9f;
 
-        stats = GetComponent<kbStats>();
-        _health = instance.health;
-        _damage = instance.damage;
-        _sight = instance.sight;
-        _speed = instance.speed;
-        _projectileSpeed = instance.projectileSpeed;
-        _cooldown = instance.cooldown;
+
+        //stats = GetComponent<kbStats>();
 
         GetComponent<kbState>();
       
@@ -46,6 +47,73 @@ public class kbAI : kbStats
         Debug.Log(CheckValidity());
 
         currentState = currentState.Process();
+    }
+
+    public override float health
+    {
+        get
+        {
+            return health;
+        }
+        set
+        {
+            health = value;
+        }
+    }
+    public override float damage
+    {
+        get
+        {
+            return damage;
+        }
+        set
+        {
+            damage = value;
+        }
+    }
+    public override float sight
+    {
+        get
+        {
+            return sight;
+        }
+        set
+        {
+            sight = value;
+        }
+    }
+    public override float speed
+    {
+        get
+        {
+            return speed;
+        }
+        set
+        {
+            speed = value;
+        }
+    }
+    public override float projectileSpeed
+    {
+        get
+        {
+            return projectileSpeed;
+        }
+        set
+        {
+            projectileSpeed = value;
+        }
+    }
+    public override float cooldown
+    {
+        get
+        {
+            return cooldown;
+        }
+        set
+        {
+            cooldown = value;
+        }
     }
 
     private void Update()

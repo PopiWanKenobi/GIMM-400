@@ -6,6 +6,7 @@ TagManager:
   tags:
   - navpoint
   - resource
+  - AI
   layers:
   - Default
   - TransparentFX

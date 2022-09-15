@@ -4,12 +4,12 @@ using UnityEngine;
 
 public abstract class kbStats : MonoBehaviour
 {
-    private float health {get; set;} //= 70f;
-    private float damage {get; set;} //= 30f;
-    private float sight {get; set;} //= 8f;
-    private float speed {get; set;} //= 2f;
-    private float projectileSpeed {get; set;} //= 3f;
-    private float cooldown {get; set;} //= 3.9f;
+    public abstract float health {get; set;} //= 70f;
+    public abstract float damage {get; set;} //= 30f;
+    public abstract float sight {get; set;} //= 8f;
+    public abstract float speed {get; set;} //= 2f;
+    public abstract float projectileSpeed {get; set;} //= 3f;
+    public abstract float cooldown {get; set;} //= 3.9f;
 
     protected string CheckValidity()
     {
