@@ -23,7 +23,7 @@ public class GameManagerInstance : MonoBehaviour
 
     private void Start() 
     {
-        aiList = GameObject.FindObjectsWithTag("AI");
+        aiList = GameObject.FindGameObjectsWithTag("AI");
 
         //implement help check
     }

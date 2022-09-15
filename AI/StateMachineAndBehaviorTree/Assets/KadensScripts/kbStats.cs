@@ -14,7 +14,7 @@ public abstract class kbStats : MonoBehaviour
     protected string CheckValidity()
     {
         bool fail = false;
-        output = "Here are the stats, they follow the rules! Health: " + health + " Damage: " +  damage + " Sight: " + sight + " Speed " + speed + " Cool down: " + cooldown + " Projectile Speed: " + projetileSpeed;
+        string output = "Here are the stats, they follow the rules! Health: " + health + " Damage: " +  damage + " Sight: " + sight + " Speed " + speed + " Cool down: " + cooldown + " Projectile Speed: " + projectileSpeed;
 
         if (health + damage > 100) 
         {
@@ -31,7 +31,7 @@ public abstract class kbStats : MonoBehaviour
 
         if(fail == true) 
         {
-            output = "Here are the stats, they do not follow the rules! Health: " + health + " Damage: " +  damage + " Sight: " + sight + " Speed " + speed + " Cool down: " + cooldown + " Projectile Speed: " + projetileSpeed;
+            output = "Here are the stats, they do not follow the rules! Health: " + health + " Damage: " +  damage + " Sight: " + sight + " Speed " + speed + " Cool down: " + cooldown + " Projectile Speed: " + projectileSpeed;
             health = 1;
             damage = 1;
             speed = 3;
