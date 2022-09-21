@@ -17,21 +17,21 @@ public class dpState : MonoBehaviour
 
     public STATE name;
     protected EVENT stage;
-    protected GameObject npc;
-    protected Transform player;
+    //protected GameObject npc;
+    //protected Transform player;
     protected dpState nextState;
-    protected NavMeshAgent agent;
+   // protected NavMeshAgent agent;
 
     float visDist = 10f;
     float visAngle = 30f;
     float shootDist = 7f;
 
-    public dpState(GameObject _npc, NavMeshAgent _agent, Transform _player)
+    public dpState()
     {
-        npc = _npc;
-        agent = _agent;
+        //npc = _npc;
+        //agent = _agent;
         stage = EVENT.ENTER;
-        player = _player;
+        //player = _player;
 
 
     }

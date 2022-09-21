@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class dpChase : dpState
 {
-    public dpChase(GameObject _npc, NavMeshAgent _agent, Transform _player) : base(_npc, _agent, _player)
+    public dpChase()
     {
         name = STATE.dpCHASE;
     }
@@ -24,7 +24,7 @@ public class dpChase : dpState
         //this if statement is the condition to switch from Chase to idle
         if (Random.Range(0, 100) < 100)
         {
-            nextState = new dpIdle(npc, agent, player);
+            nextState = new dpIdle();
             stage = EVENT.EXIT;
         }
 

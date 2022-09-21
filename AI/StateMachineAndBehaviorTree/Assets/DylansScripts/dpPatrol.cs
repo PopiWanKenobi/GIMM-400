@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class dpPatrol : dpState
 {
-    public dpPatrol(GameObject _npc, NavMeshAgent _agent, Transform _player) : base(_npc, _agent, _player)
+    public dpPatrol()
     {
         name = STATE.dpPATROL;
     }
@@ -24,7 +24,7 @@ public class dpPatrol : dpState
         //this if statement is the condition to switch from idle to patrol
         if (Random.Range(0, 100) < 100)
         {
-            nextState = new dpAttack(npc, agent, player);
+            nextState = new dpAttack();
             stage = EVENT.EXIT;
         }
 

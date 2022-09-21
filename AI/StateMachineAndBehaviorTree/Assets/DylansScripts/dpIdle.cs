@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class dpIdle : dpState
 {
-    public dpIdle(GameObject _npc, NavMeshAgent _agent, Transform _player) : base(_npc, _agent, _player)
+    public dpIdle()
     {
         name = STATE.dpIDLE;
     }
@@ -24,7 +24,7 @@ public class dpIdle : dpState
         //this if statement is the condition to switch from idle to patrol
         if (Random.Range(0, 100) < 100) //100 percent of the time swap to next state. This is the condition to exit
         {
-            nextState = new dpAttack(npc, agent, player);
+            nextState = new dpAttack();
             stage = EVENT.EXIT;
         }
 

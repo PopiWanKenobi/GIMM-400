@@ -9,7 +9,7 @@ public class dpAttack : dpState
     public GameObject spawnProjectilePos;
     public List<GameObject> enemies;
     public float speed = 7;
-    public dpAttack(GameObject _npc, NavMeshAgent _agent, Transform _player) : base(_npc, _agent, _player)
+    public dpAttack()
     {
         name = STATE.dpATTACK;
     }
@@ -19,6 +19,8 @@ public class dpAttack : dpState
         Debug.Log("I'm in attack");
 
         spawnProjectilePos = GameObject.FindGameObjectWithTag("dpSpawnPos");
+      
+
         base.Enter();
     }
 
@@ -26,7 +28,7 @@ public class dpAttack : dpState
     {
         //Do whatever you want to do in Attack right here 
         //LookAtEnemy();
-        Fire();
+        //Fire();
 
         //this if statement is the condition to switch from attack to idle
 
@@ -42,7 +44,7 @@ public class dpAttack : dpState
         GameObject bullet = Instantiate(projectilePrefab, spawnProjectilePos.transform.position, spawnProjectilePos.transform.rotation);
         bullet.transform.position = bullet.transform.position.normalized * speed * Time.deltaTime;
         Debug.Log("Fire has run");
-        nextState = new dpIdle(npc, agent, player);
+        nextState = new dpIdle();
         stage = EVENT.EXIT;
     }
     public override void Exit()

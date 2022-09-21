@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class dpStats : MonoBehaviour
+public abstract class dpStats : dpState
 {
     public abstract float health { get; set; }
     public abstract float damage { get; set; }
@@ -10,6 +10,8 @@ public abstract class dpStats : MonoBehaviour
     public abstract float speed { get; set; }
     public abstract float projectileSpeed { get; set; }
     public abstract float cooldown { get; set; }
+
+
 
     /*protected string CheckValidity()
     {

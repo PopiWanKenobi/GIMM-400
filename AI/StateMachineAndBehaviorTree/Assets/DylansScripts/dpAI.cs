@@ -6,18 +6,18 @@ using UnityEngine.AI;
 public class dpAI : dpStats
 {
     //NavMeshAgent agent;
-    public Transform player;
-    kbState currentState;
+    //public Transform player;
+    dpState currentState;
 
 
     public dpAI instance;
 
-    /*float _health;
+    float _health;
     float _damage;
     float _sight;
     float _speed;
     float _projectileSpeed;
-    float _cooldown;*/
+    float _cooldown;
 
     public dpAI()
     {
@@ -29,31 +29,34 @@ public class dpAI : dpStats
 
     void Start()
     {
-        this.instance.health = 10f;
-        this.instance.damage = 90f;
-        this.instance.sight = 9f;
-        this.instance.speed = 1f;
-        this.instance.projectileSpeed = 6f;
-        this.instance.cooldown = 7.8f;
+
+        _health = 10f;
+        _damage = 90f;
+        _sight = 9f;
+        _speed = 1f;
+        _projectileSpeed = 6f;
+        _cooldown = 7.8f;
 
 
         //stats = GetComponent<kbStats>();
 
-        GetComponent<dpState>();
+        this.GetComponent<dpState>();
 
-        //agent = GetComponent<NavMeshAgent>();
-        //currentState = new kbidle(gameObject, agent, player);
 
-       // Debug.Log(CheckValidity());
+        currentState = new dpIdle();
 
-        currentState = currentState.Process();
+        //currentState = currentState.Process();
+        Debug.Log(currentState);
+
+        //this.Process();
+
     }
 
     public override float health
     {
         get
         {
-            return health;
+            return _health;
         }
         set
         {
@@ -64,7 +67,7 @@ public class dpAI : dpStats
     {
         get
         {
-            return damage;
+            return _damage;
         }
         set
         {
@@ -75,7 +78,7 @@ public class dpAI : dpStats
     {
         get
         {
-            return sight;
+            return _sight;
         }
         set
         {
@@ -86,7 +89,7 @@ public class dpAI : dpStats
     {
         get
         {
-            return speed;
+            return _speed;
         }
         set
         {
@@ -97,7 +100,7 @@ public class dpAI : dpStats
     {
         get
         {
-            return projectileSpeed;
+            return _projectileSpeed;
         }
         set
         {
@@ -108,7 +111,7 @@ public class dpAI : dpStats
     {
         get
         {
-            return cooldown;
+            return _cooldown;
         }
         set
         {
@@ -116,9 +119,9 @@ public class dpAI : dpStats
         }
     }
 
-    private void Update()
+    public override void Update()
     {
-
+        currentState = currentState.Process();
     }
 
     //method all states can call MoveTowards()
