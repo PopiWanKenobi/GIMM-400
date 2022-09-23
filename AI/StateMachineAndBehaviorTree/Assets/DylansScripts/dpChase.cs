@@ -16,7 +16,7 @@ public class dpChase : dpState
         base.Enter();
     }
 
-    public override void Update()
+    public override void Tick()
     {
         //Do whatever you want to do in Chase right here 
 

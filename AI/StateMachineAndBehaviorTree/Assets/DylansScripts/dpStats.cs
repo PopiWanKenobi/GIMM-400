@@ -4,12 +4,7 @@ using UnityEngine;
 
 public abstract class dpStats : dpState
 {
-    public abstract float health { get; set; }
-    public abstract float damage { get; set; }
-    public abstract float sight { get; set; }
-    public abstract float speed { get; set; }
-    public abstract float projectileSpeed { get; set; }
-    public abstract float cooldown { get; set; }
+
 
 
 

@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class dpAI : dpStats
+public class dpAI : MonoBehaviour
 {
+    /*public  float health { get; set; }
+    public  float damage { get; set; }
+    public  float sight { get; set; }
+    public  float speed { get; set; }
+    public  float projectileSpeed { get; set; }
+    public  float cooldown { get; set; }*/
     //NavMeshAgent agent;
     //public Transform player;
-    dpState currentState;
+    dpState StateMachine;
+    public Transform player;
+    
 
 
     public dpAI instance;
@@ -30,6 +38,11 @@ public class dpAI : dpStats
     void Start()
     {
 
+
+        StateMachine = GetComponent<dpState>();
+        //dpState stateMachine = new dpState();
+        StateMachine.name = dpState.STATE.dpATTACK;
+        StateMachine.currentState = new dpState(StateMachine.name);
         _health = 10f;
         _damage = 90f;
         _sight = 9f;
@@ -39,90 +52,89 @@ public class dpAI : dpStats
 
 
         //stats = GetComponent<kbStats>();
+        //this.GetComponent<dpState>();
+        //StateMachine = new dpIdle();
 
-        this.GetComponent<dpState>();
-
-
-        currentState = new dpIdle();
-
-        //currentState = currentState.Process();
-        Debug.Log(currentState);
+        StateMachine.Process();
 
         //this.Process();
 
     }
+    public void Update()
+    {
+        StateMachine = StateMachine.Process();
+    }
+    
 
-    public override float health
-    {
-        get
+    /*    public override float health
         {
-            return _health;
+            get
+            {
+                return _health;
+            }
+            set
+            {
+                health = value;
+            }
         }
-        set
+        public override float damage
         {
-            health = value;
+            get
+            {
+                return _damage;
+            }
+            set
+            {
+                damage = value;
+            }
         }
-    }
-    public override float damage
-    {
-        get
+        public override float sight
         {
-            return _damage;
+            get
+            {
+                return _sight;
+            }
+            set
+            {
+                sight = value;
+            }
         }
-        set
+        public override float speed
         {
-            damage = value;
+            get
+            {
+                return _speed;
+            }
+            set
+            {
+                speed = value;
+            }
         }
-    }
-    public override float sight
-    {
-        get
+        public override float projectileSpeed
         {
-            return _sight;
+            get
+            {
+                return _projectileSpeed;
+            }
+            set
+            {
+                projectileSpeed = value;
+            }
         }
-        set
+        public override float cooldown
         {
-            sight = value;
-        }
-    }
-    public override float speed
-    {
-        get
-        {
-            return _speed;
-        }
-        set
-        {
-            speed = value;
-        }
-    }
-    public override float projectileSpeed
-    {
-        get
-        {
-            return _projectileSpeed;
-        }
-        set
-        {
-            projectileSpeed = value;
-        }
-    }
-    public override float cooldown
-    {
-        get
-        {
-            return _cooldown;
-        }
-        set
-        {
-            cooldown = value;
-        }
-    }
+            get
+            {
+                return _cooldown;
+            }
+            set
+            {
+                cooldown = value;
+            }
+        }*/
 
-    public override void Update()
-    {
-        currentState = currentState.Process();
-    }
+
+
 
     //method all states can call MoveTowards()
 }

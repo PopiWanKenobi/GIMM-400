@@ -16,7 +16,7 @@ public class dpIdle : dpState
         base.Enter();
     }
 
-    public override void Update()
+    public override void Tick()
     {
         // do whatever you want to do in reload here
 

@@ -16,10 +16,9 @@ public class dpPatrol : dpState
         base.Enter();
     }
 
-    public override void Update()
+    public override void Tick()
     {
         //Do whatever you want to do in Patrol right here 
-
 
         //this if statement is the condition to switch from idle to patrol
         if (Random.Range(0, 100) < 100)
