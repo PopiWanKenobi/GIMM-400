@@ -482,6 +482,10 @@ MonoBehaviour:
   currentState: {fileID: 0}
   bulletPrefab: {fileID: 3607452358507968603, guid: 6b1e907b7f0432243bff363c8f49943b,
     type: 3}
+  bulletPrim: {fileID: 0}
+  dylanAI: {fileID: 0}
+  gunOffset: {x: 0, y: 0, z: 0}
+  bulletSpawnPos: {fileID: 0}
 --- !u!1 &1830642621
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,9 +694,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.3
-  m_Height: 1.6
+  m_Height: 1.529397
   m_Direction: 1
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Center: {x: 0, y: 0.8353015, z: 0}
 --- !u!137 &2473559093016230139
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -894,7 +898,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!4 &2568189355433904769
 Transform:
   m_ObjectHideFlags: 0
@@ -1054,8 +1058,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2571568378635519519}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.254, y: 0.00000047683716, z: 3.744}
+  m_LocalRotation: {x: -0, y: 0.5626344, z: -0, w: 0.8267059}
+  m_LocalPosition: {x: -6.9415727, y: -0.06699997, z: 3.9217248}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2568565711087105817}
@@ -1064,7 +1068,7 @@ Transform:
   - {fileID: 7191346769012284161}
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 68.476, z: 0}
 --- !u!4 &2568330691829626191
 Transform:
   m_ObjectHideFlags: 0
@@ -3530,7 +3534,7 @@ PrefabInstance:
     - target: {fileID: 2128816274276336653, guid: 85d0355610ff4d94c9454c9d2fb69472,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.151
+      value: 3.313
       objectReference: {fileID: 0}
     - target: {fileID: 2128816274276336653, guid: 85d0355610ff4d94c9454c9d2fb69472,
         type: 3}
@@ -3570,7 +3574,7 @@ PrefabInstance:
     - target: {fileID: 4543836662655221830, guid: 85d0355610ff4d94c9454c9d2fb69472,
         type: 3}
       propertyPath: m_Name
-      value: spawnPos
+      value: dpSpawnPos
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85d0355610ff4d94c9454c9d2fb69472, type: 3}

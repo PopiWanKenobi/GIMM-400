@@ -14,11 +14,17 @@ public class dpState : MonoBehaviour
     public dpState currentState;
     // protected NavMeshAgent agent;
     public GameObject bulletPrefab;
+    public GameObject bulletPrim;
+    public GameObject dylanAI;
+    public Vector3 gunOffset;
+    public GameObject bulletSpawnPos;
 
 
     public void Start()
     {
         name = STATE.dpIDLE;
+
+
     }
     public enum STATE
     {
@@ -78,16 +84,22 @@ public class dpState : MonoBehaviour
     public void SpawnProj()
     {
         Debug.Log("BULLET SPAWNED");
+
         
+        dylanAI = GameObject.Find("DylanAI");
+        bulletSpawnPos = GameObject.Find("dpSpawnPos");
+        
+        //bulletSpawnPos = new Vector3(dylanAI.transform.position.x + .1f, dylanAI.transform.position.y + 1.3f, dylanAI.transform.position.z + .8f);
+        //bulletSpawnPos = dylanAI.transform.position ;
+        bulletPrim = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+        bulletPrim.transform.localScale = new Vector3(.08f, .08f, .08f);
+        bulletPrim.transform.localRotation = Quaternion.Euler(90, 0, 0);
 
-        //Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        GameObject bullet = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Capsule), Vector3.one, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrim, bulletSpawnPos.transform.position, bulletSpawnPos.transform.rotation);
         Rigidbody rb = bullet.AddComponent<Rigidbody>();
-        Debug.Log(player.position.x);
-        bullet.transform.position = player.position;
-        bullet.transform.rotation = player.rotation;
+        bullet.AddComponent<bulletScript>();
 
-        rb.velocity = bullet.transform.position.normalized * 1f * Time.deltaTime;
+        //rb.velocity = bullet.transform.position.normalized * 1f * Time.deltaTime;
     }
 
 }

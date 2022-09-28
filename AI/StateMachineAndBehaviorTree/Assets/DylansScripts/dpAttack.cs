@@ -13,7 +13,7 @@ public class dpAttack : dpState
 
     public dpState ourState;
 
-    public float _cooldown;
+    public float _cooldown = 1;
     //public dpAI ai;
     public dpAttack()
     {
@@ -28,8 +28,7 @@ public class dpAttack : dpState
         //bulletScale = new Vector3(.08f, .08f, .08f);
         //spawnProjectilePos = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z + 3f);
 
-        _cooldown = 1;
-        //Debug.Log("COOLDOWN IS" + _cooldown);
+        //_cooldown = 1;
         //Debug.Log("I'm in attack");
 
         //spawnProjectilePos = GameObject.FindGameObjectWithTag("dpSpawnPos");
@@ -42,41 +41,27 @@ public class dpAttack : dpState
     {
         //Do whatever you want to do in Attack right here 
         //LookAtEnemy();
-       /* _cooldown -= Time.deltaTime;
+        Debug.Log("COOLDOWN IS" + _cooldown);
+
+        _cooldown -= Time.deltaTime;
         if(_cooldown <= 0)
         {
+            Fire();
+            _cooldown = 7.8f;
             
-            _cooldown = 1;
-            
-        }*/
+        }
 
-        Fire();
-        //nextState = new dpIdle();
-        //stage = EVENT.EXIT;
 
-        //this if statement is the condition to switch from attack to idle
 
 
     }
-    /*private void LookAtEnemy()
-    {
-        
-    }*/
+
     private void Fire()
     {
+        SpawnProj();
+        //Shoot();
         Debug.Log("Bullet Fired");
-        //ourState.SpawnProj();
 
-        StartCoroutine(Shoot());
-      //  Quaternion bulletRot = Quaternion.Euler(90f, 0f, 0f);
-        
-      //  GameObject bullet = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Capsule), spawnProjectilePos, transform.rotation, transform);
-        //bullet = transform.rotation;
-        /*
-        bullet.transform.localScale = bulletScale;
-        bullet.transform.rotation = bulletRot;
-        Rigidbody rb = bullet.AddComponent<Rigidbody>();
-        rb.velocity = bullet.transform.position.normalized * speed * Time.deltaTime;*/
 
     }
 
