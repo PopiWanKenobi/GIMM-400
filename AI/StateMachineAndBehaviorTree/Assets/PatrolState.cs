@@ -4,34 +4,33 @@ using UnityEngine;
 
 public class PatrolState : State {
 
-    Transform destination;
+    Vector3 destination;
+    float rotation;
+    float speed;
 
     public PatrolState(StateController stateController) : base(stateController) { }
 
     public override void CheckTransitions()
     {
-        if (stateController.CheckIfInRange("Player"))
+        if (stateController.CheckIfInRange())
         {
             stateController.SetState(new ChaseState(stateController));
         }
     }
     public override void Act()
     {
-        if(destination == null || stateController.ai.DestinationReached())
+        if(destination == null || stateController.ai.remainingDistance < 1f)
         {
             destination = stateController.GetNextNavPoint();
-            stateController.ai.SetTarget(destination);
+            stateController.ai.transform.LookAt(destination);
+            stateController.ai.SetDestination(destination);
+
         }
     }
     public override void OnStateEnter()
     {
         destination = stateController.GetNextNavPoint();
-        if (stateController.ai.agent != null)
-        {
-            stateController.ai.agent.speed = 1f;
-        }
-        stateController.ai.SetTarget(destination);
-        stateController.ChangeColor(Color.blue);
+        stateController.ai.SetDestination(destination);
     }
 
 }

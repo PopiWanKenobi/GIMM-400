@@ -1,57 +1,71 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class StateController : MonoBehaviour {
 
     public State currentState;
-    public GameObject[] navPoints;
+    public NavMeshAgent ai;
+    public float walkPointRange;
+    public Vector3 patrolPoint;
+    public Vector3 target;
+    public Vector3 destination;
     public GameObject enemyToChase;
-    public int navPointNum;
-    public float remainingDistance;
-    public Transform destination;
-    public UnityStandardAssets.Characters.ThirdPerson.AICharacterControl ai;
-    public Renderer[] childrenRend;
     public GameObject[] enemies;
-    public float detectionRange = 5;
-    public Gizmos gizmos;
 
-    public Transform GetNextNavPoint()
-    {
-        navPointNum = (navPointNum + 1) % navPoints.Length;
-        return navPoints[navPointNum].transform;
-    } 
+    public Transform rotation;
 
-    public void ChangeColor(Color color)
+    public float health;
+    public float damage;
+    public float speed;
+    public float cooldown;
+    public float projectileSpeed;
+    public float sight;
+
+    //health + damage cant be > 100
+    //sight + speed cant be 10
+    //cooldown must be 1.3* projectile speed
+
+    public Vector3 GetNextNavPoint()
     {
-       /* foreach(Renderer r in childrenRend)
-        {
-            foreach(Material m in r.materials)
-            {
-                m.color = color;
-            }
-        }*/
+
+        float randomZpos = Random.Range(-sight, sight);
+        float randomXpos = Random.Range(-sight, sight);
+
+        patrolPoint = new Vector3(transform.position.x + randomXpos, transform.position.y, transform.position.z + randomZpos);
+        return patrolPoint;
+
+        // navPointNum = (navPointNum + 1) % navPoints.Length;
+        // return navPoints[navPointNum].transform;
     }
-    public bool CheckIfInRange(string tag)
+
+    public bool CheckIfInRange()
     {
-        enemies = GameObject.FindGameObjectsWithTag(tag);
+        //enemies = GameObject.FindGameObjectsWithTag("AI");
         if (enemies != null)
         {
             foreach (GameObject g in enemies)
             {
-                if(Vector3.Distance(g.transform.position, transform.position) < detectionRange)
+                if(Vector3.Distance(g.transform.position, transform.position) < sight)
                 {
                     enemyToChase = g;
+
                     return true;
+                    
+
                 }
             }
         }
         return false;
     }
+
 	void Start () {
-        navPoints = GameObject.FindGameObjectsWithTag("navpoint");
-        ai = GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>();
-        childrenRend = GetComponentsInChildren<Renderer>();
+
+        ai = GetComponent<NavMeshAgent>();
+        ai.speed = speed;
+
+        //navPoints = GameObject.FindGameObjectsWithTag("navpoint");
         SetState(new PatrolState(this));
 	}
 	
@@ -76,6 +90,8 @@ public class StateController : MonoBehaviour {
             currentState.OnStateEnter();
         }
     }
+
+
 
 
 }

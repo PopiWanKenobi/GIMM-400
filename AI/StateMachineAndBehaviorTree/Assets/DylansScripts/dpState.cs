@@ -70,8 +70,8 @@ public class dpState : MonoBehaviour
         if (stage == EVENT.ENTER) Enter();
         if (stage == EVENT.UPDATE)
         {
-            Debug.Log("Stage: " + stage);
-            Debug.Log("CurrentState: " + currentState.name);
+            //Debug.Log("Stage: " + stage);
+            //Debug.Log("CurrentState: " + currentState.name);
             Tick();
         }
         if (stage == EVENT.EXIT)
@@ -83,7 +83,7 @@ public class dpState : MonoBehaviour
     }
     public void SpawnProj()
     {
-        Debug.Log("BULLET SPAWNED");
+        //Debug.Log("BULLET SPAWNED");
 
         
         dylanAI = GameObject.Find("DylanAI");

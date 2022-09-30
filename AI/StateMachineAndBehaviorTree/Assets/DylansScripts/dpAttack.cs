@@ -41,7 +41,7 @@ public class dpAttack : dpState
     {
         //Do whatever you want to do in Attack right here 
         //LookAtEnemy();
-        Debug.Log("COOLDOWN IS" + _cooldown);
+        //Debug.Log("COOLDOWN IS" + _cooldown);
 
         _cooldown -= Time.deltaTime;
         if(_cooldown <= 0)
@@ -51,16 +51,13 @@ public class dpAttack : dpState
             
         }
 
-
-
-
     }
 
     private void Fire()
     {
         SpawnProj();
         //Shoot();
-        Debug.Log("Bullet Fired");
+        //Debug.Log("Bullet Fired");
 
 
     }

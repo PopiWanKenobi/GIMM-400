@@ -18,6 +18,5 @@ public class FleeState : State {
     public override void OnStateEnter()
     {
         
-        stateController.ChangeColor(Color.yellow);
     }
 }
