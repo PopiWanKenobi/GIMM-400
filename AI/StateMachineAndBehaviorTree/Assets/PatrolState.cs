@@ -29,6 +29,7 @@ public class PatrolState : State {
     }
     public override void OnStateEnter()
     {
+        stateController.ai.speed = stateController.speed;
         destination = stateController.GetNextNavPoint();
         stateController.ai.SetDestination(destination);
     }

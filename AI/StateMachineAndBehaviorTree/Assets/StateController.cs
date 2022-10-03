@@ -15,13 +15,18 @@ public class StateController : MonoBehaviour {
     public GameObject[] enemies;
 
     public Transform rotation;
+    public GameObject bullet;
+    public GameObject bulletSpawnPos;
+    public float projMagnifier;
 
     public float health;
     public float damage;
     public float speed;
     public float cooldown;
+    public float timeTillShot;
     public float projectileSpeed;
     public float sight;
+    public float chaseDist;
 
     //health + damage cant be > 100
     //sight + speed cant be 10
@@ -47,14 +52,19 @@ public class StateController : MonoBehaviour {
         {
             foreach (GameObject g in enemies)
             {
-                if(Vector3.Distance(g.transform.position, transform.position) < sight)
-                {
-                    enemyToChase = g;
+                if (g != null) {
 
-                    return true;
-                    
+                    if (Vector3.Distance(g.transform.position, transform.position) < sight)
+                    {
 
+                        enemyToChase = g;
+
+                        return true;
+
+
+                    }
                 }
+
             }
         }
         return false;
@@ -64,7 +74,8 @@ public class StateController : MonoBehaviour {
 
         ai = GetComponent<NavMeshAgent>();
         ai.speed = speed;
-
+        chaseDist = sight / 2;
+        projMagnifier = 2;
         //navPoints = GameObject.FindGameObjectsWithTag("navpoint");
         SetState(new PatrolState(this));
 	}
@@ -72,6 +83,13 @@ public class StateController : MonoBehaviour {
 	void Update () {
         currentState.CheckTransitions();
         currentState.Act();
+
+        if (timeTillShot > 0)
+        {
+            timeTillShot -= Time.deltaTime;
+        }
+        else timeTillShot = 0;
+
 
 
     }
@@ -91,7 +109,43 @@ public class StateController : MonoBehaviour {
         }
     }
 
+    public void Fire()
+    {
+        Rigidbody rb = Instantiate(bullet, bulletSpawnPos.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        bullet.GetComponent<bulletScript>().bullDamage = damage;
+        
+        rb.AddForce(transform.forward * (projectileSpeed * projMagnifier) , ForceMode.Impulse);
+        HasFired();
+        timeTillShot = cooldown;
 
 
 
+    }
+
+    public bool HasFired()
+    {
+        if(timeTillShot > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "bullet")
+        {
+            TakeDamage();
+        }
+    }
+
+    public void TakeDamage()
+    {
+        health -= bullet.GetComponent<bulletScript>().bullDamage;
+
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

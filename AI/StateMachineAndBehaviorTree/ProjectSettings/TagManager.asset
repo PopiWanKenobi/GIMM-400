@@ -9,6 +9,7 @@ TagManager:
   - AI
   - dpSpawnPos
   - dpProjectile
+  - bullet
   layers:
   - Default
   - TransparentFX

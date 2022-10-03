@@ -16,7 +16,7 @@ public class ChaseState : State {
             stateController.SetState(new PatrolState(stateController));
         }
 
-        if (Vector3.Distance(destination, stateController.ai.transform.position) < 3 )
+        if (Vector3.Distance(destination, stateController.ai.transform.position) < stateController.chaseDist)
         {
             stateController.ai.speed = 0;
             stateController.ai.velocity = Vector3.zero;

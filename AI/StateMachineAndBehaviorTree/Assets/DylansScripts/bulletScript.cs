@@ -4,20 +4,14 @@ using UnityEngine;
 
 public class bulletScript : MonoBehaviour
 {
-    public Rigidbody rb;
-    public GameObject bullet;
-    // Start is called before the first frame update
-    void Start()
+
+    public float bullDamage;
+    public float selfDestruct = 3;
+
+
+    private void OnCollisionEnter(Collision collision)
     {
-      rb =  GetComponent<Rigidbody>();
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        //rb.AddForce(transform.forward * 100);
-
-        rb.velocity = transform.forward * 6f;
-
+        selfDestruct -= Time.deltaTime;
+        Destroy(gameObject);
     }
 }
