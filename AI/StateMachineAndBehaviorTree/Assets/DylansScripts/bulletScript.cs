@@ -6,12 +6,28 @@ public class bulletScript : MonoBehaviour
 {
 
     public float bullDamage;
-    public float selfDestruct = 3;
+    public float selfDestruct;
+    public GameObject hitEffect;
 
 
     private void OnCollisionEnter(Collision collision)
     {
-        selfDestruct -= Time.deltaTime;
+        selfDestruct = 3;
         Destroy(gameObject);
+
+        if(hitEffect != null) Instantiate(hitEffect, collision.transform.position, collision.transform.rotation);
+
+    }
+    private void Update()
+    {
+        if (selfDestruct > 0)
+        {
+            selfDestruct -= Time.deltaTime;
+
+        }
+        if (selfDestruct < 0)
+        {
+            Destroy(hitEffect);
+        }
     }
 }

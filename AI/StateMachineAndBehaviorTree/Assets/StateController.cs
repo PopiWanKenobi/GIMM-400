@@ -22,8 +22,10 @@ public class StateController : MonoBehaviour, IActor {
     public GameObject gunshotParticle;
     public GameObject blood;
 
-    private GameObject particle;
-
+    
+    //health + damage cant be > 100
+    //sight + speed cant be 10
+    //cooldown must be 1.3* projectile speed
     public float health;
     public float damage;
     public float speed;
@@ -35,9 +37,7 @@ public class StateController : MonoBehaviour, IActor {
     public float chaseDist;
     public float timeTillShot;
 
-    //health + damage cant be > 100
-    //sight + speed cant be 10
-    //cooldown must be 1.3* projectile speed
+
 
    
     public Vector3 GetNextNavPoint()
@@ -136,7 +136,7 @@ public class StateController : MonoBehaviour, IActor {
 
         //audio and particles
         AudioSource.PlayClipAtPoint(gunshotSound, bulletSpawnPos.transform.position);
-        particle = Instantiate(gunshotParticle, bulletSpawnPos.transform.position, bulletSpawnPos.transform.rotation);
+        Instantiate(gunshotParticle, bulletSpawnPos.transform.position, bulletSpawnPos.transform.rotation);
 
     }
 
