@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class StateController : MonoBehaviour {
+public class StateController : MonoBehaviour, IActor {
 
     public State currentState;
     public NavMeshAgent ai;
@@ -27,16 +27,19 @@ public class StateController : MonoBehaviour {
     public float health;
     public float damage;
     public float speed;
-    public float cooldown;
-    public float timeTillShot;
-    public float projectileSpeed;
     public float sight;
+    public float projectileSpeed;
+    public float cooldown;
+
+
     public float chaseDist;
+    public float timeTillShot;
 
     //health + damage cant be > 100
     //sight + speed cant be 10
     //cooldown must be 1.3* projectile speed
 
+   
     public Vector3 GetNextNavPoint()
     {
 
@@ -77,6 +80,13 @@ public class StateController : MonoBehaviour {
 
 	void Start () {
 
+        //cooldown = projectileSpeed * 1.3f;
+
+        // checks stats and dies if bad stats returned
+        CheckStats();
+        if (!CheckStats()) Die();
+
+
         ai = GetComponent<NavMeshAgent>();
         ai.speed = speed;
         chaseDist = sight / 2;
@@ -106,7 +116,7 @@ public class StateController : MonoBehaviour {
         }
 
         currentState = state;
-        gameObject.name = "AI agent in state " + state.GetType().Name;
+        gameObject.name = gameObject.name + state.GetType().Name;
 
         if(currentState != null)
         {
@@ -127,9 +137,6 @@ public class StateController : MonoBehaviour {
         //audio and particles
         AudioSource.PlayClipAtPoint(gunshotSound, bulletSpawnPos.transform.position);
         particle = Instantiate(gunshotParticle, bulletSpawnPos.transform.position, bulletSpawnPos.transform.rotation);
-
-
-
 
     }
 
@@ -160,7 +167,91 @@ public class StateController : MonoBehaviour {
 
         if(health <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+
+    }
+
+    //======================== STATS ===========================
+    public float Health
+    {
+        get
+        {
+            return health;
+        }
+        set
+        {
+            health = value;
+        }
+    }
+    public float Damage
+    {
+        get
+        {
+            return damage;
+        }
+        set
+        {
+            damage = value;
+        }
+    }
+
+    public float Speed
+    {
+        get
+        {
+            return speed;
+        }
+        set
+        {
+            speed = value;
+        }
+    }
+    public float Cooldown
+    {
+        get
+        {
+            return cooldown;
+        }
+        set
+        {
+            cooldown = value;
+        }
+    }
+
+    public float ProjectileSpeed
+    {
+        get
+        {
+            return projectileSpeed;
+        }
+        set
+        {
+            projectileSpeed = value;
+        }
+    }
+    public float Sight
+    {
+        get
+        {
+            return sight;
+        }
+        set
+        {
+            sight = value;
+        }
+    }
+
+    public bool CheckStats()
+    {
+        if (Health + Damage > 100) return false;
+        if (Sight + Speed > 10) return false;
+        if (Cooldown < ProjectileSpeed * 1.3f) return false;
+        else return true;
     }
 }

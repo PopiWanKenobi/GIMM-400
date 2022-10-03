@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface IActor {
-/*
-   public float Health { get; set; }
 
-   public float AttackStrength { get; set; }
+    public bool CheckStats();
+        
+    public float Health { get; set; }
 
-    public bool CheckStates();
+    public float Damage { get; set; }
 
-    public float Speed { }
+    public float Sight { get; set; }
+
+    public float Speed { get; set; }
 
     public float ProjectileSpeed { get; set; }
 
-    public abstract bool ratioCheck { }*/
+    public float Cooldown { get; set; }
+
+
 
 }
 

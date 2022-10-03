@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomAgent : MonoBehaviour, IActor
+public class CustomAgent : MonoBehaviour
 {
 /*
     public float Health { get => _health; }
