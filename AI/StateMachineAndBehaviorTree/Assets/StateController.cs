@@ -18,6 +18,11 @@ public class StateController : MonoBehaviour {
     public GameObject bullet;
     public GameObject bulletSpawnPos;
     public float projMagnifier;
+    public AudioClip gunshotSound;
+    public GameObject gunshotParticle;
+    public GameObject blood;
+
+    private GameObject particle;
 
     public float health;
     public float damage;
@@ -113,10 +118,16 @@ public class StateController : MonoBehaviour {
     {
         Rigidbody rb = Instantiate(bullet, bulletSpawnPos.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
         bullet.GetComponent<bulletScript>().bullDamage = damage;
-        
         rb.AddForce(transform.forward * (projectileSpeed * projMagnifier) , ForceMode.Impulse);
+
+
         HasFired();
         timeTillShot = cooldown;
+
+        //audio and particles
+        AudioSource.PlayClipAtPoint(gunshotSound, bulletSpawnPos.transform.position);
+        particle = Instantiate(gunshotParticle, bulletSpawnPos.transform.position, bulletSpawnPos.transform.rotation);
+
 
 
 
@@ -133,8 +144,12 @@ public class StateController : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "bullet")
+       
+
+        if (collision.gameObject.tag == "bullet")
         {
+            Instantiate(blood, collision.transform.position, collision.transform.rotation);
+
             TakeDamage();
         }
     }
