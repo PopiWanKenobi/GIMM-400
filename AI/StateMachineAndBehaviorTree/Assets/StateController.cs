@@ -4,25 +4,22 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class StateController : MonoBehaviour, IActor {
-
+    
+    //stuff for state machine
     public State currentState;
     public NavMeshAgent ai;
-    public float walkPointRange;
     public Vector3 patrolPoint;
-    public Vector3 target;
-    public Vector3 destination;
     public GameObject enemyToChase;
     public GameObject[] enemies;
 
-    public Transform rotation;
+    //stuff for bullets and particles
     public GameObject bullet;
     public GameObject bulletSpawnPos;
-    public float projMagnifier;
     public AudioClip gunshotSound;
     public GameObject gunshotParticle;
     public GameObject blood;
 
-    
+    //stats
     //health + damage cant be > 100
     //sight + speed cant be 10
     //cooldown must be 1.3* projectile speed
@@ -33,43 +30,34 @@ public class StateController : MonoBehaviour, IActor {
     public float projectileSpeed;
     public float cooldown;
 
-
+    //magnifiers and distances
     public float chaseDist;
     public float timeTillShot;
+    public float projMagnifier;
 
-
-
-   
     public Vector3 GetNextNavPoint()
     {
-
+        // Finds a point to walk to
         float randomZpos = Random.Range(-sight, sight);
         float randomXpos = Random.Range(-sight, sight);
 
         patrolPoint = new Vector3(transform.position.x + randomXpos, transform.position.y, transform.position.z + randomZpos);
         return patrolPoint;
-
-        // navPointNum = (navPointNum + 1) % navPoints.Length;
-        // return navPoints[navPointNum].transform;
     }
 
     public bool CheckIfInRange()
     {
-        //enemies = GameObject.FindGameObjectsWithTag("AI");
+        //checks the enemy list to see if any of them are in range
         if (enemies != null)
         {
             foreach (GameObject g in enemies)
             {
-                if (g != null) {
+                if (g != null) { //This if needed to be here because g goes null if the enemy dies
 
                     if (Vector3.Distance(g.transform.position, transform.position) < sight)
                     {
-
                         enemyToChase = g;
-
                         return true;
-
-
                     }
                 }
 
@@ -80,25 +68,25 @@ public class StateController : MonoBehaviour, IActor {
 
 	void Start () {
 
-        //cooldown = projectileSpeed * 1.3f;
-
         // checks stats and dies if bad stats returned
         CheckStats();
         if (!CheckStats()) Die();
 
-
+        // Some basic setup
         ai = GetComponent<NavMeshAgent>();
         ai.speed = speed;
         chaseDist = sight / 2;
         projMagnifier = 2;
-        //navPoints = GameObject.FindGameObjectsWithTag("navpoint");
         SetState(new PatrolState(this));
 	}
 	
 	void Update () {
+
+        //this needs to run every frame for every state
         currentState.CheckTransitions();
         currentState.Act();
 
+        //this counts down after the player shoots
         if (timeTillShot > 0)
         {
             timeTillShot -= Time.deltaTime;
@@ -110,6 +98,7 @@ public class StateController : MonoBehaviour, IActor {
     }
     public void SetState(State state)
     {
+        //set the enemy state
         if(currentState != null)
         {
             currentState.OnStateExit();
@@ -126,11 +115,14 @@ public class StateController : MonoBehaviour, IActor {
 
     public void Fire()
     {
+        //creates the bullet, gets the rigid body so we cab add force
         Rigidbody rb = Instantiate(bullet, bulletSpawnPos.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        // sets the bullet damage based on what enemy shoots
         bullet.GetComponent<bulletScript>().bullDamage = damage;
+        //adds force
         rb.AddForce(transform.forward * (projectileSpeed * projMagnifier) , ForceMode.Impulse);
 
-
+        //kicks off the cooldown
         HasFired();
         timeTillShot = cooldown;
 
@@ -142,6 +134,7 @@ public class StateController : MonoBehaviour, IActor {
 
     public bool HasFired()
     {
+        // a bool to tell the enemy if they can shoot
         if(timeTillShot > 0)
         {
             return true;
@@ -151,20 +144,21 @@ public class StateController : MonoBehaviour, IActor {
 
     private void OnCollisionEnter(Collision collision)
     {
-       
-
+       //enemy checks if it's been hit by a bullet
         if (collision.gameObject.tag == "bullet")
         {
+            //adds blood effect
             Instantiate(blood, collision.transform.position, collision.transform.rotation);
-
+            //runs take damage
             TakeDamage();
         }
     }
 
     public void TakeDamage()
     {
+        //takes damage
         health -= bullet.GetComponent<bulletScript>().bullDamage;
-
+        //die if health too low
         if(health <= 0)
         {
             Die();
@@ -173,11 +167,13 @@ public class StateController : MonoBehaviour, IActor {
 
     public void Die()
     {
+        //die
         Destroy(gameObject);
-
     }
-
+    
     //======================== STATS ===========================
+
+    //some nonsence to satisfy the interface
     public float Health
     {
         get
@@ -247,6 +243,7 @@ public class StateController : MonoBehaviour, IActor {
         }
     }
 
+    // make sure all the state are good
     public bool CheckStats()
     {
         if (Health + Damage > 100) return false;
