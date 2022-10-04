@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class StateController : MonoBehaviour, IActor {
     
     //stuff for state machine
@@ -10,7 +11,7 @@ public class StateController : MonoBehaviour, IActor {
     public NavMeshAgent ai;
     public Vector3 patrolPoint;
     public GameObject enemyToChase;
-    public GameObject[] enemies;
+    public List<GameObject> enemies;
 
     //stuff for bullets and particles
     public GameObject bullet;
@@ -28,7 +29,7 @@ public class StateController : MonoBehaviour, IActor {
     public float speed;
     public float sight;
     public float projectileSpeed;
-    public float cooldown;
+    private float cooldown;
 
     //magnifiers and distances
     public float chaseDist;
@@ -52,7 +53,8 @@ public class StateController : MonoBehaviour, IActor {
         {
             foreach (GameObject g in enemies)
             {
-                if (g != null) { //This if needed to be here because g goes null if the enemy dies
+                if (g != null)
+                { //This if needed to be here because g goes null if the enemy dies
 
                     if (Vector3.Distance(g.transform.position, transform.position) < sight)
                     {
@@ -60,14 +62,28 @@ public class StateController : MonoBehaviour, IActor {
                         return true;
                     }
                 }
+                //else ResizeList();
 
             }
         }
         return false;
     }
+    /*public void ResizeList()
+    {
+        foreach (GameObject g in enemies)
+        {
+            if (g == null)
+            { 
+                enemies.Remove(g);
+
+            }
+
+        }
+    }*/
 
 	void Start () {
 
+        cooldown = projectileSpeed * .25f;
         // checks stats and dies if bad stats returned
         CheckStats();
         if (!CheckStats()) Die();
@@ -248,7 +264,7 @@ public class StateController : MonoBehaviour, IActor {
     {
         if (Health + Damage > 100) return false;
         if (Sight + Speed > 10) return false;
-        if (Cooldown < ProjectileSpeed * 1.3f) return false;
+        if (Cooldown < ProjectileSpeed * .25f) return false;
         else return true;
     }
 }

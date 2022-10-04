@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChaseState : State {
 
     Vector3 destination;
+    float rotationSpeed = 4;
 
 
     public ChaseState(StateController stateController) : base(stateController) { }
@@ -32,7 +33,9 @@ public class ChaseState : State {
         if(stateController.enemyToChase != null)
         {
             destination = stateController.enemyToChase.transform.position;
-            stateController.ai.transform.LookAt(destination);
+            Quaternion toRotation = Quaternion.FromToRotation(stateController.ai.transform.position, destination);
+            stateController.ai.transform.rotation = Quaternion.Lerp(stateController.ai.transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            //stateController.ai.transform.LookAt(destination);
             stateController.ai.SetDestination(destination);
         }
     }

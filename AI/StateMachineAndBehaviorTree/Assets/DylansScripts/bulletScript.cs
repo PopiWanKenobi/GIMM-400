@@ -20,14 +20,14 @@ public class bulletScript : MonoBehaviour
     }
     private void Update()
     {
-        if (selfDestruct > 0)
+        /*if (selfDestruct > 0)
         {
             selfDestruct -= Time.deltaTime;
 
         }
         if (selfDestruct < 0)
         {
-            Destroy(hitEffect);
-        }
+            Destroy(hitEffect.gameObject);
+        }*/
     }
 }

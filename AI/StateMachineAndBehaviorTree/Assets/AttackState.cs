@@ -5,6 +5,7 @@ using UnityEngine;
 public class AttackState : State
 {
     float cooldown;
+    float rotationSpeed = 4;
     public AttackState(StateController stateController) : base(stateController) { }
 
     // Start is called before the first frame update
@@ -31,6 +32,8 @@ public class AttackState : State
     public override void Act()
     {
         cooldown -= Time.deltaTime;
+        //Quaternion toRotation = Quaternion.FromToRotation(stateController.ai.transform.position, stateController.enemyToChase.transform.position);
+        //stateController.ai.transform.rotation = Quaternion.Lerp(stateController.ai.transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
         stateController.ai.transform.LookAt(stateController.enemyToChase.transform.position);
 
         if (!stateController.HasFired())

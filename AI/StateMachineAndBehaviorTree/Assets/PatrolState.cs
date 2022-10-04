@@ -5,7 +5,7 @@ using UnityEngine;
 public class PatrolState : State {
 
     Vector3 destination;
-    float rotation;
+    float rotationSpeed = 4;
     float speed;
 
     public PatrolState(StateController stateController) : base(stateController) { }
@@ -20,9 +20,11 @@ public class PatrolState : State {
     public override void Act()
     {
         if(destination == null || stateController.ai.remainingDistance < 1f)
-        {
+        {   
             destination = stateController.GetNextNavPoint();
-            stateController.ai.transform.LookAt(destination);
+            Quaternion toRotation = Quaternion.FromToRotation(stateController.ai.transform.position, destination);
+            stateController.ai.transform.rotation = Quaternion.Lerp(stateController.ai.transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            //stateController.ai.transform.LookAt(destination);
             stateController.ai.SetDestination(destination);
 
         }
