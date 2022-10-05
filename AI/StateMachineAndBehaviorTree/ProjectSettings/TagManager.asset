@@ -10,6 +10,7 @@ TagManager:
   - dpSpawnPos
   - dpProjectile
   - bullet
+  - cam
   layers:
   - Default
   - TransparentFX

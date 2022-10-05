@@ -5,6 +5,7 @@ using System;
 
 public class CameraSwap : MonoBehaviour
 {
+    public GameObject[] findCameras;
     public List<Camera> cameras;
     public Camera currentCamera;
     public int cameraNum;
@@ -12,7 +13,13 @@ public class CameraSwap : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        currentCamera = cameras[0];
+        findCameras = GameObject.FindGameObjectsWithTag("cam");
+
+        foreach(GameObject cam in findCameras)
+        {
+            cameras.Add(cam.GetComponentInChildren<Camera>());
+        }
+        currentCamera = cameras[5];
         currentCamera.enabled = true;
     }
 
@@ -28,11 +35,7 @@ public class CameraSwap : MonoBehaviour
         currentCamera.enabled = true;
     }
 
-    public void SwapCam()
-    {
-        
 
-    }
 
     public void RemoveCam()
     {

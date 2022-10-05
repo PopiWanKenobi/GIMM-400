@@ -12,6 +12,8 @@ public class StateController : MonoBehaviour, IActor {
     public Vector3 patrolPoint;
     public GameObject enemyToChase;
     public List<GameObject> enemies;
+    public GameObject[] findEnemies;
+
 
     //stuff for bullets and particles
     public GameObject bullet;
@@ -23,7 +25,7 @@ public class StateController : MonoBehaviour, IActor {
     //stats
     //health + damage cant be > 100
     //sight + speed cant be 10
-    //cooldown must be 1.3* projectile speed
+    //cooldown must be .25* projectile speed
     public float health;
     public float damage;
     public float speed;
@@ -31,6 +33,7 @@ public class StateController : MonoBehaviour, IActor {
     public float projectileSpeed;
     private float cooldown;
 
+    
     //magnifiers and distances
     public float chaseDist;
     public float timeTillShot;
@@ -42,7 +45,12 @@ public class StateController : MonoBehaviour, IActor {
         float randomZpos = Random.Range(-sight, sight);
         float randomXpos = Random.Range(-sight, sight);
 
-        patrolPoint = new Vector3(transform.position.x + randomXpos, transform.position.y, transform.position.z + randomZpos);
+        //CheckEnemiesLeft();
+        if(CheckEnemiesLeft())
+        {
+             patrolPoint = new Vector3(Vector3.zero.x + randomXpos, transform.position.y, Vector3.zero.z + randomZpos);
+        }
+        else patrolPoint = new Vector3(transform.position.x + randomXpos, transform.position.y, transform.position.z + randomZpos);
         return patrolPoint;
     }
 
@@ -51,6 +59,7 @@ public class StateController : MonoBehaviour, IActor {
         //checks the enemy list to see if any of them are in range
         if (enemies != null)
         {
+            CheckEnemiesLeft();
             foreach (GameObject g in enemies)
             {
                 if (g != null)
@@ -58,30 +67,43 @@ public class StateController : MonoBehaviour, IActor {
 
                     if (Vector3.Distance(g.transform.position, transform.position) < sight)
                     {
+                        if(g != gameObject)
+                        {
                         enemyToChase = g;
                         return true;
+                        }
+                            
                     }
                 }
-                //else ResizeList();
 
             }
         }
         return false;
     }
-    /*public void ResizeList()
+    public bool CheckEnemiesLeft()
     {
-        foreach (GameObject g in enemies)
+
+        for (int i = enemies.Count - 1; i >= 0; i--)
         {
-            if (g == null)
-            { 
-                enemies.Remove(g);
-
-            }
-
+            if (enemies[i] == null) enemies.Remove(enemies[i]);
         }
-    }*/
+        if (enemies.Count == 2) return true;
+        else return false;
+    }
 
-	void Start () {
+
+    void Start () {
+
+        //populates the findEnemies array by finding objects with tag
+        findEnemies = GameObject.FindGameObjectsWithTag("AI");
+
+        //adds everything in the findEnemies array to the enemies list
+        //we use a list so we can remove the enemies from it as they die
+        foreach(GameObject AI in findEnemies)
+        {
+            enemies.Add(AI);
+        }
+
 
         cooldown = projectileSpeed * .25f;
         // checks stats and dies if bad stats returned
