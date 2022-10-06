@@ -6654,11 +6654,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 779486819, guid: e5b5b7d3c3f39484989ce5cf6b871c70, type: 3}
       propertyPath: sight
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 779486819, guid: e5b5b7d3c3f39484989ce5cf6b871c70, type: 3}
       propertyPath: speed
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 779486819, guid: e5b5b7d3c3f39484989ce5cf6b871c70, type: 3}
       propertyPath: bullet

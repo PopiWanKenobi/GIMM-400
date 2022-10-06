@@ -12,10 +12,9 @@ public class bulletScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        selfDestruct = 3;
+        if(hitEffect != null) Instantiate(hitEffect, collision.transform.position, collision.transform.rotation);
         Destroy(gameObject);
 
-        if(hitEffect != null) Instantiate(hitEffect, collision.transform.position, collision.transform.rotation);
 
     }
     private void Update()
